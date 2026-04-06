@@ -39,10 +39,10 @@ jobs:
           mkdir -p storage/framework/sessions
           mkdir -p storage/framework/views
           mkdir -p storage/logs
-          chmod -R 775 bootstrap/cache storage
+          chmod -R 777 bootstrap/cache storage
 
       - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
+        run: composer install --prefer-dist --no-interaction --no-progress --no-scripts
 
       - name: Prepare test environment
         run: |
@@ -57,6 +57,9 @@ jobs:
 
       - name: Generate app key
         run: php artisan key:generate
+
+      - name: Discover packages
+        run: php artisan package:discover --ansi
 
       - name: Execute tests
         env:
